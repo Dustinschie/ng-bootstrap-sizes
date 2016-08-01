@@ -1,20 +1,21 @@
 /**
-@fileOverview
+  @fileOverview
 
-@toc
+  @toc
 
 */
 
 'use strict';
 
-angular.module('ATNI.ng-bootstrap-sizes', [])
-.factory('StrapSizes', [ function () {
-
-	//public methods & properties
-	var self ={
-	};
-	
-	//private methods and properties - should ONLY expose methods and properties publicly (via the 'return' object) that are supposed to be used; everything else (helper methods that aren't supposed to be called externally) should be private.
-	
-	return self;
-}]);
+angular.module('ds.ng-bootstrap-sizes', ['matchMedia'])
+.run(['$rootScope', 'screenSize', function ($rootScope, screenSize) {
+  console.log('test');
+  var sizes = ['xs', 'sm', 'md', 'lg'];
+  angular.forEach(sizes, function (size) {
+    $rootScope[size] = screenSize.is(size);
+    screenSize.onChange($rootScope, size, function (isMatch) {
+      $rootScope[size] = isMatch;
+    });
+  });
+}])
+;
